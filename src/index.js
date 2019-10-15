@@ -4,7 +4,7 @@ import validator from 'validator';
 import { watch } from 'melanke-watchjs';
 
 const state = {
-  urlValid: false
+  urlValid: false,
 };
 
 const rssUrl = document.getElementById('rssUrl');
