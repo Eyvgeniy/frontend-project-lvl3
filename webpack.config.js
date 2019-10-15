@@ -5,25 +5,25 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'index_bundle.js'
+    filename: 'index_bundle.js',
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/template.html'
-    })
+      template: './src/template.html',
+    }),
   ],
   module: {
     rules: [
       { test: /\.js$/, loader: 'babel-loader', exclude: '/node_modules/' },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      }
-    ]
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
-    port: 9000
-  }
+    port: 9000,
+  },
 };
