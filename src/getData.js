@@ -6,7 +6,8 @@ export default (data) => {
   items.forEach((item) => {
     const link = item.querySelector('link').textContent;
     const article = item.querySelector('title').textContent;
-    articles.push({ link, article });
+    const artDescription = item.querySelector('description').textContent;
+    articles.push({ link, article, artDescription });
   });
 
   return { title, description, articles };
