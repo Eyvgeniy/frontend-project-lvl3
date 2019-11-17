@@ -1,16 +1,18 @@
-export default (data) => {
-  const { title, description, articles } = data;
+export default (feedData, articles) => {
+  const { title, description, id } = feedData;
   // Make container for feeds
   const feed = document.createElement('div');
   feed.classList.add('feed', 'pb-3');
+
   const h5 = document.createElement('h5');
   h5.textContent = title;
+  feed.appendChild(h5);
+
   const p = document.createElement('p');
   p.textContent = description;
-  feed.appendChild(h5);
   feed.appendChild(p);
-  // Make feeds layout
-  articles.forEach((element) => {
+  // Make feeds layout  
+  articles.filter(({ feedId }) => feedId === id).forEach((element) => {
     const { link, article, artDescription } = element;
     // Make "a" tag for feed
     const articleLink = document.createElement('a');
