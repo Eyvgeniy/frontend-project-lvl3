@@ -1,3 +1,65 @@
-export default (state) => {
+import { isURL } from 'validator';
+import { watch } from 'melanke-watchjs';
+import { isUrlDouble } from './utils';
+import {
+  renderModal, renderRssFeed, renderForm, renderError,
+} from './renders';
+import fetchRss from './fetch';
 
+const state = {
+  formState: '',
+  feeds: [],
+  articles: [],
+  error: '',
+  modal: '',
+};
+
+export default () => {
+  const output = document.querySelector('.output');
+  const modal = document.querySelector('#exampleModal');
+
+  // Listen for form submit
+  document.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const url = formData.get('url');
+    if (!isURL(url) || isUrlDouble(state.feeds, url)) {
+      state.formState = 'invalidLink';
+      setTimeout(() => state.formState = 'filling', 2000);
+      return;
+    }
+    state.formState = 'sending';
+    fetchRss(url, state);
+  });
+
+  // Open modal window
+  output.addEventListener('click', (e) => {
+    e.preventDefault();
+    const { title, description } = e.target.dataset;
+    state.modal = { title, description };
+  });
+
+  // Watch valid of url
+  watch(state, 'formState', () => {
+    renderForm(state);
+  });
+
+  // Watch of changing feeds state
+  watch(state, 'articles', () => {
+    const { feeds, articles } = state;
+    output.innerHTML = '';
+    feeds.forEach((feed) => {
+      const feedLayout = renderRssFeed(feed, articles);
+      output.appendChild(feedLayout);
+    });
+  });
+  // Watch of changing modal window state
+  watch(state, 'modal', () => {
+    renderModal(state.modal, modal);
+  });
+
+  // Watch of changing error window state
+  watch(state, 'error', () => {
+    renderError(state.error, output);
+  });
 };
