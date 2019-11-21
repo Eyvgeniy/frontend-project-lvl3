@@ -14,6 +14,5 @@ export const addIdFeed = (feed, articles, id) => {
   return { feed: feedWithId, articles: articlesWithId };
 };
 
-export const filterUniq = (firstArray, secondArray) => {
-  secondArray.filter((el) => !firstArray.find((art) => art.article === el.article));
-};
+export const filterUniq = (firstArray, secondArray) => secondArray
+  .filter((el) => !firstArray.find((art) => art.article === el.article));
