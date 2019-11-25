@@ -1,3 +1,5 @@
+import { isURL } from 'validator';
+
 export const isUrlDouble = (feeds, url) => {
   if (feeds.length === 0) {
     return false;
@@ -16,3 +18,9 @@ export const addIdFeed = (feed, articles, id) => {
 
 export const filterUniq = (firstArray, secondArray) => secondArray
   .filter((el) => !firstArray.find((art) => art.article === el.article));
+
+export const validateUrl = (feeds, url) => {
+  const isValid = isURL(url);
+  const isNew = !isUrlDouble(feeds, url);
+  return isValid && isNew;
+};

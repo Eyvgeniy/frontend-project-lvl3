@@ -1,7 +1,9 @@
+/* eslint no-param-reassign: 0 */
+
 import axios from 'axios';
-import { uniqueId } from 'lodash';
+import { uniqueId, differenceBy } from 'lodash';
 import {
-  addIdFeed, addIdArray, filterUniq, isUrlDouble,
+  addIdFeed, addIdArray, isUrlDouble,
 } from './utils';
 
 const cors = 'https://cors-anywhere.herokuapp.com';
@@ -26,7 +28,7 @@ const getRssData = (data) => {
 const addNewArticles = (articles, url, state) => {
   const { id } = state.feeds.find((feed) => feed.url === url);
   const existArticles = state.articles.filter((article) => article.feedId === id);
-  const newArticles = filterUniq(existArticles, articles);
+  const newArticles = differenceBy(articles, existArticles, 'link');
   const newArticlesWithId = addIdArray(newArticles, id);
   state.articles = [...state.articles, ...newArticlesWithId];
 };

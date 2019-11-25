@@ -1,10 +1,11 @@
-import { isURL } from 'validator';
+/* eslint no-return-assign: 0 */
+
 import { watch } from 'melanke-watchjs';
-import { isUrlDouble } from './utils';
+import { validateUrl } from './utils';
 import {
   renderModal, renderRssFeed, renderForm, renderError,
 } from './renders';
-import fetchRss from './fetch';
+import handlingRSS from './handler';
 
 const state = {
   formState: '',
@@ -23,13 +24,13 @@ export default () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const url = formData.get('url');
-    if (!isURL(url) || isUrlDouble(state.feeds, url)) {
+    if (validateUrl(state.feeds, url)) {
+      state.formState = 'sending';
+      handlingRSS(url, state);
+    } else {
       state.formState = 'invalidLink';
       setTimeout(() => state.formState = 'filling', 2000);
-      return;
     }
-    state.formState = 'sending';
-    fetchRss(url, state);
   });
 
   // Open modal window
