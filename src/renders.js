@@ -1,6 +1,3 @@
-const button = document.getElementById('button');
-const rssUrl = document.getElementById('rssUrl');
-
 export const renderModal = (modal, tag) => {
   const { title, description } = modal;
   const titleTag = tag.querySelector('.modal-title');
@@ -50,6 +47,9 @@ export const renderRssFeed = (feedData, articles) => {
   return feed;
 };
 export const renderForm = (state) => {
+  const button = document.getElementById('button');
+  const rssUrl = document.getElementById('rssUrl');
+
   if (state.formState === 'filling') {
     button.textContent = 'Submit';
     button.disabled = false;

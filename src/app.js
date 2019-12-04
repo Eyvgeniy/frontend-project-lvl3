@@ -1,21 +1,20 @@
 /* eslint no-return-assign: 0 */
 
 import { watch } from 'melanke-watchjs';
-import { validateUrl } from './utils';
+import { isValidUrl } from './utils';
 import {
   renderModal, renderRssFeed, renderForm, renderError,
 } from './renders';
 import handlingRSS from './handler';
 
-const state = {
-  formState: '',
-  feeds: [],
-  articles: [],
-  error: '',
-  modal: '',
-};
-
 export default () => {
+  const state = {
+    formState: '',
+    feeds: [],
+    articles: [],
+    error: '',
+    modal: '',
+  };
   const output = document.querySelector('.output');
   const modal = document.querySelector('#exampleModal');
 
@@ -24,7 +23,7 @@ export default () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const url = formData.get('url');
-    if (validateUrl(state.feeds, url)) {
+    if (isValidUrl(state.feeds, url)) {
       state.formState = 'sending';
       handlingRSS(url, state);
     } else {

@@ -19,7 +19,7 @@ export const addIdFeed = (feed, articles, id) => {
 export const filterUniq = (firstArray, secondArray) => secondArray
   .filter((el) => !firstArray.find((art) => art.article === el.article));
 
-export const validateUrl = (feeds, url) => {
+export const isValidUrl = (feeds, url) => {
   const isValid = isURL(url);
   const isNew = !isUrlDouble(feeds, url);
   return isValid && isNew;
