@@ -34,7 +34,6 @@ export default () => {
 
   // Open modal window
   output.addEventListener('click', (e) => {
-    e.preventDefault();
     const { title, description } = e.target.dataset;
     state.modal = { title, description };
   });
