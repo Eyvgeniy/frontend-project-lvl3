@@ -14,6 +14,11 @@ $ make install
 ### 2. Start project:
 
 ```
+$ make start
+```
+### 3. Build project:
+
+```
 $ make build
 ```
 
